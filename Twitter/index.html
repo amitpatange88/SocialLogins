@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Twitter Login JavaScript Example</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.12.0/bootstrap-social.min.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/oauth-io/oauth-js/c5af4519/dist/oauth.js"></script>
+</head>
+<script>
+  $('#twitter-button').on('click', function() {
+  // Initialize with your OAuth.io app public key
+  //OAuth.initialize('6KzwuHtXVLWwSSENcQP1qMT5O');
+  OAuth.initialize('HwAr2OtSxRgEEnO2-JnYjsuA3tc');
+  // Use popup for OAuth
+  OAuth.popup('twitter').then(twitter => {
+    console.log('twitter:', twitter);
+    // Prompts 'welcome' message with User's email on successful login
+    // #me() is a convenient method to retrieve user data without requiring you
+    // to know which OAuth provider url to call
+    twitter.me().then(data => {
+      console.log('data:', data);
+      alert('Twitter says your email is:' + data.email + ".\nView browser 'Console Log' for more details");
+    });
+    // Retrieves user data from OAuth provider by using #get() and
+    // OAuth provider url    
+    twitter.get('/1.1/account/verify_credentials.json?include_email=true').then(data => {
+      console.log('self data:', data);
+    })    
+  });
+})
+</script> 
+<body>
+ <a id="twitter-button" class="btn btn-block btn-social btn-twitter" style="position: absolute;width: 200px;">
+  <i class="fa fa-twitter"></i> Sign in with Twitter
+</a>
+</body>
+</html>
+
+<!-- https://jsfiddle.net/s3egg5h7/43/ -->
